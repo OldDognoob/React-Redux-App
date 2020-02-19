@@ -1,40 +1,22 @@
 import * as types from './actionTypes'
-import axios from 'axios'
+import axios from 'axios';
 
-const pokemonAPI= 'https://pokeapi.co/api/v2/pokemon/'
+export const FETCH_JOKE_START = 'FETCH_JOKE_START';
+export const FETCH_JOKE_SUCCESS = 'FETCH_JOKE_SUCCESS';
+export const FETCH_JOKE_FAILURE = 'FETCH_JOKE_FAILURE';
 
 // STEP-7 MAKE ACTION CREATORS THE COMPONENTS CAN USE DIRECTLY
-export const getPokemons = () => dispatch =>{
-    dispatch({type: types.GET_POKEMON_START})
-    dispatch({type: types.SPINNER_START})
-        axios.get(pokemonAPI)
-        .then(response => {
-            console.log(response)
-            dispatch({type: types.SET_POKEMON_START, payload:response.data.results})
-        })
-        .catch(error =>{
-            debugger
-        })
-        .finally(() =>{
-            dispatch({type: types.SPINNER_STOP})
-        })
-    }  
-    
-export const getPokemons = () => dispatch=>{
-    dispatch({type: types.GET_POKEMON_SUCCESS})
-    dispatch({type: types.SPINNER_START})
-    axios.get(pokemonAPI)
-    .then(response =>{
-        console.log(response)
-        dispatch({type: types.SET_POKEMON_SUCCESS, payload:response.data.results})
-    })
-    .catch(error=>{
-        console.log(error)
-    })
-    .finally(() =>{
-        dispatch({type: types.SPINNER_STOP})
-   })
-
-}
-
+export const fetchJoke = () => dispatch => {
+    dispatch({ type: types.FETCH_JOKE_START });
+    // fetch joke
+    axios
+      .get('//api.icndb.com/jokes/random?exclude=[explicit]')
+      .then(res => {
+        dispatch({ type: types.FETCH_JOKE_SUCCESS, payload: res.data.value.joke });
+      })
+      .catch(error =>{
+        dispatch({type: types.FETCH_JOKE_FAILURE, payload: error.response})
+      })
+  };
+  
 
