@@ -8,18 +8,18 @@ function Jokes(props){
     return(
         <div>
             <button onClick={props.fetchJoke}>Fetch me some Laughs!</button>
-            {!props.joke && !props.propsIsFetching && <p>Fetch a joke for some giggles!</p>}
-            {props.IsFetching && (
+            {!props.joke && !props.isFetching && <p>Fetch a joke for some giggles!</p>}
+            {props.isFetching && (
                 <Loader 
-                type="puff"
+                type="Puff"
                 color="#89a0de"
-                height="100"
-                width="100"
+                height={100}
+                width={100}
                 />
             )}
-            {/* <div>
-                {props.fetchJoke && !props.propsIsFetching}
-            </div> */}
+          <h2>
+            {props.joke}
+          </h2>
         </div>
     );
 }
@@ -29,9 +29,9 @@ function Jokes(props){
   const mapStateToProps = state => {
     console.log(state);
     return {
-      error: state.error,
-      isFetching: state.isFetching,
-      joke: state.joke
+      error: state.joke.error,
+      isFetching: state.joke.isFetching,
+      joke: state.joke.joke
     };
   };
   export default connect(
